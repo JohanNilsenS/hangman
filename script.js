@@ -1,4 +1,3 @@
-
 //Listor beroende på svårgihetsgrad
 let arrayEasy = [
   "Potatismos",
@@ -32,7 +31,6 @@ function startGame() {
 //Funktionen för att få fram ett randomord
 let easyWord = Array.from(arrayEasy[randomNum()]);
 let hardWord = Array.from(arrayHard[randomNum()]);
-
 function randomNum(min, max) {
   min = Math.ceil(0);
   max = Math.floor(5);
@@ -41,8 +39,15 @@ function randomNum(min, max) {
 //Alternativt kan koden skrivas:
 let number = Math.floor(Math.random() * 5);
 
+// skapa en loop som gör en guessBox för varje varv.
+// Längden ska vara lika lång som easyWord eller hardWord
+let guessWord = document.getElementById("theWord");
+for (let i = 0; i < easyWord.length; i++) {
+  console.log(easyWord[i]);
+  guessWord.innerHTML += "<span class='test'></span>";
+}
 //Funktionerna för spelen beroende på svårighetsgrad
-
+// Kanske kan göra om detta till en funktion?
 function easyGame() {
   startGame();
   console.log(easyWord);
@@ -88,14 +93,27 @@ function wrongGuess() {
     legs.style.display = "inline";
   } else {
     console.log("Something went wrong with wrongGuess()");
+    // Kanske ska slänga in gameOver() ?
   }
   points = points + 1;
 }
 
-// Test av keypress - Något vi kan använda oss av?
-// document.onkeypress = function (evt) {
-//   evt = evt || window.event;
-//   var charCode = evt.keyCode || evt.which;
-//   var charStr = String.fromCharCode(charCode);
-//   alert(charStr);
-// };
+// Farliga testar här:
+function guess(charStr) {
+  if (easyWord.includes(charStr)) {
+    console.log("Yapp");
+  } else {
+    wrongGuess();
+  }
+}
+
+// Något vi kanske kan använda? Men vi måste göra om den då en del grejer kommer tas bort från javaScript
+document.onkeyup = function (evt) {
+  evt = evt || window.event;
+  var charCode = evt.keyCode || evt.which;
+  var charStr = String.fromCharCode(charCode);
+  console.log(charStr);
+  guess(charStr);
+};
+
+// Guess funktion
