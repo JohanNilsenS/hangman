@@ -1,1 +1,58 @@
 
+/* Select difficulty box*/
+button {
+  margin: 1vw;
+  padding: 1vw;
+}
+
+#selectDiff {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  flex-flow: column;
+  width: fit-content;
+  padding: 1rem;
+  background-color: steelblue;
+  color: whitesmoke;
+  border-radius: 10%;
+}
+
+#selectDiff h1 {
+  margin: 0;
+  text-align: center;
+}
+
+#selectDiff h2 {
+  margin: 1rem;
+}
+
+
+
+/* Hangman box*/
+#hangmangame {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+/* Endstate box */
+#endGame {
+  display: none;
+}
+
+/*  */
+#theWord {
+  display: flex;
+}
+
+.test {
+  display: flex;
+  flex-flow: column;
+  width: 26px;
+  height: 26px;
+  margin-left: 5px;
+  background-color: black;
+  border-radius: 40%;
+}
