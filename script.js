@@ -7,9 +7,9 @@ let arrayEasy = [
   "Datorskärm",
 ];
 
-let arrayHard = ["Kex", "Sax", "Sko", "Träd", "Öland"];
 // Points för att måla upp hangman
 let points;
+let winPoints = 0;
 //Definera boxarna som visas när spelet är i olika states
 let startState = document.getElementById("selectDiff");
 let gameState = document.getElementById("hangmangame");
@@ -29,8 +29,8 @@ function startGame() {
 
 //Kod för att bryta ner orden i listorna
 //Funktionen för att få fram ett randomord
-let easyWord = Array.from(arrayEasy[randomNum()]);
-let hardWord = Array.from(arrayHard[randomNum()]);
+let easyWord = Array.from(arrayEasy[randomNum()].toUpperCase());
+// let hardWord = Array.from(arrayHard[randomNum()].toUpperCase());
 function randomNum(min, max) {
   min = Math.ceil(0);
   max = Math.floor(5);
@@ -44,10 +44,11 @@ let number = Math.floor(Math.random() * 5);
 let guessWord = document.getElementById("theWord");
 for (let i = 0; i < easyWord.length; i++) {
   console.log(easyWord[i]);
-  guessWord.innerHTML += "<span class='test'></span>";
+  guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
 }
 //Funktionerna för spelen beroende på svårighetsgrad
 // Kanske kan göra om detta till en funktion?
+
 function easyGame() {
   startGame();
   console.log(easyWord);
@@ -98,22 +99,62 @@ function wrongGuess() {
   points = points + 1;
 }
 
+let guessWrong = [];
+let guessRight = [];
+
+// for easyWord.length easyWord == charStr if true ändra färg/lägg till bokstav
+// i den indexen
+
 // Farliga testar här:
 function guess(charStr) {
   if (easyWord.includes(charStr)) {
-    console.log("Yapp");
-  } else {
+    if (guessRight.includes(charStr)) {
+      console.log("You already guessed this lol");
+    } else {
+      guessIsRight(charStr);
+      guessRight.push(charStr);
+      // Något som hittar bokstaven i easyWord och ändrar färg/skapar bokstaven på rätt plats
+    }
+  } else if (!guessWrong.includes(charStr)) {
+    guessWrong.push(charStr);
+    addWrong(charStr);
     wrongGuess();
+  } else {
+    console.log("Already guessed wrong lol");
+  }
+  checkWord();
+}
+
+// Kollar om du gissat alla bokstäver i theWord
+function checkWord() {
+  if (winPoints == easyWord.length) {
+    console.log("I think you won");
+  } else {
+    console.log("Nope there's still more!");
   }
 }
 
+//Denna triggas när användaren trycker på en knapp
+function guessIsRight(charStr) {
+  for (let i = 0; i < easyWord.length; i++) {
+    if (charStr == easyWord[i]) {
+      document.getElementById(`${i}`).innerHTML = `${charStr}`;
+      winPoints = winPoints + 1;
+    }
+  }
+}
+
+// Skapar bokstäver i HTML som vi har gissat fel
+let wrongGuessHtml = document.getElementById("wrongGuess");
+function addWrong(charStr) {
+  wrongGuessHtml.innerHTML += `<span class="wrongGuess">${charStr}</span>`;
+}
+
 // Något vi kanske kan använda? Men vi måste göra om den då en del grejer kommer tas bort från javaScript
-document.onkeyup = function (evt) {
+document.onkeydown = function (evt) {
   evt = evt || window.event;
   var charCode = evt.keyCode || evt.which;
   var charStr = String.fromCharCode(charCode);
   console.log(charStr);
   guess(charStr);
 };
-
-// Guess funktion
