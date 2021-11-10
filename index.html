@@ -17,6 +17,7 @@
     </section>
     <!-- Html for the gamebox -->
     <section id="hangmangame">
+      <h1>Hangman</h1>
       <div>
         <!-- Hangman svg (Blev lättare att manipulera om den var i htmlkod) -->
         <svg
@@ -70,14 +71,17 @@
         </svg>
         <!-- Slut på svg -->
       </div>
-      <div>
-        <h3>Bokstäver i ordet:</h3>
-        <div id="theWord"></div>
-      </div>
-      <!--  -->
-      <div>
-        <h3>Bokstäver du gissat på:</h3>
-      </div>
+      <section id="wordGuessBox">
+        <div>
+          <h3>Bokstäver i ordet:</h3>
+          <div id="theWord"></div>
+        </div>
+        <!--  -->
+        <div>
+          <h3>Bokstäver du gissat på:</h3>
+          <div id="wrongGuess"></div>
+        </div>
+      </section>
     </section>
     <!-- endState här -->
     <section id="endGame">
