@@ -4,7 +4,7 @@ button {
   padding: 1vw;
 }
 
-#selectDiff {
+#firstPage {
   display: flex;
   margin-left: auto;
   margin-right: auto;
@@ -17,19 +17,19 @@ button {
   border-radius: 10%;
 }
 
-#selectDiff h1 {
+#firstPage h1 {
   margin: 0;
   text-align: center;
 }
 
-#selectDiff h2 {
+#firstPage h2 {
   margin: 1rem;
 }
 
 
 
 /* Hangman box*/
-#hangmangame {
+#mainPage {
   display: none;
   margin-left: auto;
   margin-right: auto;
@@ -38,7 +38,7 @@ button {
   padding: 0px 0px 20px 0px;
 }
 
-#hangmangame h1 {
+#mainPage h1 {
   margin: 0;
   text-align: center;
   text-transform: uppercase;
@@ -48,15 +48,37 @@ button {
 }
 
 /* wordGuessBox */
-#wordGuessBox {
+#letterBox {
   margin-top: 10px;
   padding: 1rem;
   border-top: solid 1px black;
 }
 
 /* Endstate box */
-#endGame {
+#lastPage {
   display: none;
+  /* display: flex; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+}
+
+#lastPage div {
+  margin: 10% auto auto auto;
+  background-color: orange;
+  padding: 20px;
+  display: flex;
+  border-radius: 25%;
+  flex-flow: column;
+}
+
+#lastPage div p {
+  margin: 0;
+  margin-left: 10%;
 }
 
 /*  */
