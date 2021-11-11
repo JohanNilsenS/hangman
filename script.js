@@ -1,10 +1,46 @@
 //Listor beroende på svårgihetsgrad
-let arrayEasy = [
-  "Potatismos",
-  "Landningsbana",
-  "Sverige",
-  "Internet",
-  "Datorskärm",
+let arrayAnimals = [
+  "Cat",
+  "Dog",
+  "Dolphine",
+  "Puma",
+  "Elephant",
+  "Fish",
+  "Monkey",
+  "Gorilla",
+];
+
+let arraySports = [
+  "Tennis",
+  "Football",
+  "Hockey",
+  "Paintball",
+  "Racing",
+  "Skiing",
+  "Snowboarding",
+  "ESPORT",
+];
+
+let arrayFood = [
+  "Pizza",
+  "Hamburger",
+  "Soup",
+  "Bread",
+  "Milk",
+  "Chocolate",
+  "Potatoes",
+  "Cheese",
+];
+
+let arrayCountries = [
+  "Sweden",
+  "Norway",
+  "England",
+  "France",
+  "America",
+  "Germany",
+  "Finland",
+  "Australia",
 ];
 
 // Test av total stats
@@ -16,7 +52,7 @@ let totalLossBox = document.getElementById("totLoss");
 let totalGameBox = document.getElementById("totGames");
 // gameOn - säger om spelet ska lyssna på tangenttryck
 let gameOn = false;
-let easyWord;
+let theWord;
 // Points för att måla upp hangman
 let points;
 let winPoints = 0;
@@ -30,11 +66,15 @@ let youLost = document.getElementById("youLost");
 // Definerat restart knappen
 let restart = document.getElementById("restart");
 //Knapparna med svårighetsgrad i JavaScript
-let easyDiff = document.getElementById("easyDiff");
-let hardDiff = document.getElementById("hardDiff");
+let animals = document.getElementById("animals");
+let sports = document.getElementById("sports");
+let food = document.getElementById("food");
+let countries = document.getElementById("countries");
 // Eventlyssnare för knappar
-easyDiff.addEventListener("click", easyGame);
-hardDiff.addEventListener("click", hardGame);
+animals.addEventListener("click", animalsGame);
+sports.addEventListener("click", sportsGame);
+food.addEventListener("click", foodGame);
+countries.addEventListener("click", countriesGame);
 restart.addEventListener("click", restartGame);
 //Funktion från att gå från start to game state
 function startGame() {
@@ -50,26 +90,59 @@ function startGame() {
 // let hardWord = Array.from(arrayHard[randomNum()].toUpperCase());
 
 // skapa en loop som gör en guessBox för varje varv.
-// Längden ska vara lika lång som easyWord eller hardWord
+// Längden ska vara lika lång som theWord eller hardWord
 
 //Funktionerna för spelen beroende på svårighetsgrad
 // Kanske kan göra om detta till en funktion?
 
-function easyGame() {
-  easyWord = Array.from(
-    arrayEasy[Math.floor(Math.random() * arrayEasy.length)].toUpperCase()
+function animalsGame() {
+  theWord = Array.from(
+    arrayAnimals[Math.floor(Math.random() * arrayAnimals.length)].toUpperCase()
   );
-  for (let i = 0; i < easyWord.length; i++) {
-    console.log(easyWord[i]);
+  for (let i = 0; i < theWord.length; i++) {
+    console.log(theWord[i]);
     guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
   }
   startGame();
-  console.log(easyWord);
+  console.log(theWord);
 }
-
-function hardGame() {
+// Sports
+function sportsGame() {
+  theWord = Array.from(
+    arraySports[Math.floor(Math.random() * arraySports.length)].toUpperCase()
+  );
+  for (let i = 0; i < theWord.length; i++) {
+    console.log(theWord[i]);
+    guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
+  }
   startGame();
-  console.log(hardWord);
+  console.log(theWord);
+}
+// Food
+function foodGame() {
+  theWord = Array.from(
+    arrayFood[Math.floor(Math.random() * arrayFood.length)].toUpperCase()
+  );
+  for (let i = 0; i < theWord.length; i++) {
+    console.log(theWord[i]);
+    guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
+  }
+  startGame();
+  console.log(theWord);
+}
+// Countries
+function countriesGame() {
+  theWord = Array.from(
+    arrayCountries[
+      Math.floor(Math.random() * arrayCountries.length)
+    ].toUpperCase()
+  );
+  for (let i = 0; i < theWord.length; i++) {
+    console.log(theWord[i]);
+    guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
+  }
+  startGame();
+  console.log(theWord);
 }
 
 let guessWord = document.getElementById("theWord");
@@ -107,8 +180,6 @@ function wrongGuess() {
     legs.style.display = "inline";
   } else {
     loseState();
-    totalGame++;
-    totalLoss++;
     // Kanske ska slänga in gameOver() ?
   }
   points = points + 1;
@@ -117,18 +188,18 @@ function wrongGuess() {
 let guessWrong = [];
 let guessRight = [];
 
-// for easyWord.length easyWord == charStr if true ändra färg/lägg till bokstav
+// for theWord.length theWord == charStr if true ändra färg/lägg till bokstav
 // i den indexen
 
 // Farliga testar här:
 function guess(charStr) {
-  if (easyWord.includes(charStr)) {
+  if (theWord.includes(charStr)) {
     if (guessRight.includes(charStr)) {
       console.log("You already guessed this lol");
     } else {
       guessIsRight(charStr);
       guessRight.push(charStr);
-      // Något som hittar bokstaven i easyWord och ändrar färg/skapar bokstaven på rätt plats
+      // Något som hittar bokstaven i theWord och ändrar färg/skapar bokstaven på rätt plats
     }
   } else if (!guessWrong.includes(charStr)) {
     guessWrong.push(charStr);
@@ -142,10 +213,8 @@ function guess(charStr) {
 
 // Kollar om du gissat alla bokstäver i theWord
 function checkWord() {
-  if (winPoints == easyWord.length) {
+  if (winPoints == theWord.length) {
     console.log("I think you won");
-    totalWins++;
-    totalGame++;
     winState();
   } else {
     console.log("Nope there's still more!");
@@ -154,8 +223,8 @@ function checkWord() {
 
 //Denna triggas när användaren trycker på en knapp
 function guessIsRight(charStr) {
-  for (let i = 0; i < easyWord.length; i++) {
-    if (charStr == easyWord[i]) {
+  for (let i = 0; i < theWord.length; i++) {
+    if (charStr == theWord[i]) {
       document.getElementById(`${i}`).innerHTML = `${charStr}`;
       winPoints = winPoints + 1;
     }
@@ -185,18 +254,24 @@ document.onkeydown = function (evt) {
 function winState() {
   youWon.textContent = "I THINK YOU GOD DAMN WON";
   youLost.style.display = "none";
+  totalWins++;
+  totalWinsBox.innerHTML = "Total wins: " + totalWins;
   endGame();
 }
 
 function loseState() {
   youLost.textContent = "Don't ever play this again. You suck.";
   youWon.style.display = "none";
+  totalLoss++;
+  totalLossBox.innerHTML = "Total losses: " + totalLoss;
   endGame();
 }
 
 function endGame() {
   gameOn = false;
   endState.style.display = "flex";
+  totalGame++;
+  totalGameBox.innerHTML = "Total games: " + totalGame;
 }
 
 function restartGame() {
