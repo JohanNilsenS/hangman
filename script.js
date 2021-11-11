@@ -7,49 +7,62 @@ let arrayEasy = [
   "Datorskärm",
 ];
 
+// Test av total stats
+let totalWins = 0;
+let totalLoss = 0;
+let totalGame = 0;
+let totalWinsBox = document.getElementById("totWins");
+let totalLossBox = document.getElementById("totLoss");
+let totalGameBox = document.getElementById("totGames");
+// gameOn - säger om spelet ska lyssna på tangenttryck
+let gameOn = false;
+let easyWord;
 // Points för att måla upp hangman
 let points;
 let winPoints = 0;
 //Definera boxarna som visas när spelet är i olika states
-let startState = document.getElementById("selectDiff");
-let gameState = document.getElementById("hangmangame");
-let endState = document.getElementById("endBox");
-
+let startState = document.getElementById("firstPage");
+let gameState = document.getElementById("mainPage");
+let endState = document.getElementById("lastPage");
+// Definera de olika win conditions
+let youWon = document.getElementById("youWon");
+let youLost = document.getElementById("youLost");
+// Definerat restart knappen
+let restart = document.getElementById("restart");
 //Knapparna med svårighetsgrad i JavaScript
 let easyDiff = document.getElementById("easyDiff");
 let hardDiff = document.getElementById("hardDiff");
-
+// Eventlyssnare för knappar
 easyDiff.addEventListener("click", easyGame);
 hardDiff.addEventListener("click", hardGame);
+restart.addEventListener("click", restartGame);
 //Funktion från att gå från start to game state
 function startGame() {
   startState.style.display = "none";
   gameState.style.display = "block";
+  gameOn = true;
+  hideman(); // Gömmer kroppsdelarna på hangman vid start av nytt spel
 }
 
 //Kod för att bryta ner orden i listorna
 //Funktionen för att få fram ett randomord
-let easyWord = Array.from(arrayEasy[randomNum()].toUpperCase());
+
 // let hardWord = Array.from(arrayHard[randomNum()].toUpperCase());
-function randomNum(min, max) {
-  min = Math.ceil(0);
-  max = Math.floor(5);
-  return Math.floor(Math.random() * (max - min) + min);
-}
-//Alternativt kan koden skrivas:
-let number = Math.floor(Math.random() * 5);
 
 // skapa en loop som gör en guessBox för varje varv.
 // Längden ska vara lika lång som easyWord eller hardWord
-let guessWord = document.getElementById("theWord");
-for (let i = 0; i < easyWord.length; i++) {
-  console.log(easyWord[i]);
-  guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
-}
+
 //Funktionerna för spelen beroende på svårighetsgrad
 // Kanske kan göra om detta till en funktion?
 
 function easyGame() {
+  easyWord = Array.from(
+    arrayEasy[Math.floor(Math.random() * arrayEasy.length)].toUpperCase()
+  );
+  for (let i = 0; i < easyWord.length; i++) {
+    console.log(easyWord[i]);
+    guessWord.innerHTML += `<span id='${i}' class='test'>_</span>`; //här får ni ett span-element med klassen "test 0" först
+  }
   startGame();
   console.log(easyWord);
 }
@@ -58,6 +71,8 @@ function hardGame() {
   startGame();
   console.log(hardWord);
 }
+
+let guessWord = document.getElementById("theWord");
 
 // Deklarerar de olika delarna av hangman svg
 
@@ -77,8 +92,6 @@ function hideman() {
   points = 0;
 }
 
-hideman();
-
 // Test av points funktion
 
 function wrongGuess() {
@@ -93,7 +106,9 @@ function wrongGuess() {
   } else if (points < 5) {
     legs.style.display = "inline";
   } else {
-    console.log("Something went wrong with wrongGuess()");
+    loseState();
+    totalGame++;
+    totalLoss++;
     // Kanske ska slänga in gameOver() ?
   }
   points = points + 1;
@@ -129,6 +144,9 @@ function guess(charStr) {
 function checkWord() {
   if (winPoints == easyWord.length) {
     console.log("I think you won");
+    totalWins++;
+    totalGame++;
+    winState();
   } else {
     console.log("Nope there's still more!");
   }
@@ -155,6 +173,43 @@ document.onkeydown = function (evt) {
   evt = evt || window.event;
   var charCode = evt.keyCode || evt.which;
   var charStr = String.fromCharCode(charCode);
-  console.log(charStr);
-  guess(charStr);
+  if (gameOn == true) {
+    guess(charStr);
+    console.log(charStr);
+  }
 };
+// document.addEventListener('keydown', function(e) {
+//   var char = event.which || event.keyCode;
+// })
+
+function winState() {
+  youWon.textContent = "I THINK YOU GOD DAMN WON";
+  youLost.style.display = "none";
+  endGame();
+}
+
+function loseState() {
+  youLost.textContent = "Don't ever play this again. You suck.";
+  youWon.style.display = "none";
+  endGame();
+}
+
+function endGame() {
+  gameOn = false;
+  endState.style.display = "flex";
+}
+
+function restartGame() {
+  endState.style.display = "none"; // Hides the endState screen
+  gameState.style.display = "none"; //Hides the game
+  startState.style.display = "flex"; // Enter start screen
+  guessWord.innerHTML = ""; // Resets the wordbox
+  wrongGuessHtml.innerHTML = ""; //Reset the wrong guessed text boxes
+  winPoints = 0; // Reset the points until win
+  points = 0; // Reset the points until lost
+  guessWrong = []; //Reset array with wrong guessed words
+  guessRight = []; //Reset array with right guessed words
+  console.log("Ah shit... Here we go again!"); // Famous quote from CJ
+  youWon.style.display = "block"; // Reset the win message
+  youLost.style.display = "block"; // Reset the lose message
+}
