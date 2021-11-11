@@ -4,19 +4,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Johan&Sovran" />
     <title>Hangman</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- Html for select diffculty -->
-    <section id="selectDiff">
+    <section id="firstPage">
       <h1>Hangman</h1>
       <h2>Välj svårighetsgrad:</h2>
       <button id="easyDiff">Lätt</button>
       <button id="hardDiff">Svår</button>
     </section>
     <!-- Html for the gamebox -->
-    <section id="hangmangame">
+    <section id="mainPage">
       <h1>Hangman</h1>
       <div>
         <!-- Hangman svg (Blev lättare att manipulera om den var i htmlkod) -->
@@ -71,7 +72,7 @@
         </svg>
         <!-- Slut på svg -->
       </div>
-      <section id="wordGuessBox">
+      <section id="letterBox">
         <div>
           <h3>Bokstäver i ordet:</h3>
           <div id="theWord"></div>
@@ -84,10 +85,15 @@
       </section>
     </section>
     <!-- endState här -->
-    <section id="endGame">
-      <h1 id="wonGame">You won!</h1>
-      <h2 id="loseGame">Game over! Better try again!</h2>
-      <button id="restartGame">Spela igen</button>
+    <section id="lastPage">
+      <div>
+        <h1 id="youWon">You won!</h1>
+        <h2 id="youLost">Game over! Better try again!</h2>
+        <button id="restart">Spela igen</button>
+        <p>Total wins: <span id="totWins">0</span></p>
+        <p>Total losses: <span id="totLoss">0</span></p>
+        <p>Total games played: <span id="totGames">0</span></p>
+      </div>
     </section>
 
     <script src="script.js"></script>
